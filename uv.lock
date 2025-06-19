@@ -253,6 +253,7 @@ source = { virtual = "." }
 dependencies = [
     { name = "ibis-framework", extra = ["duckdb"] },
     { name = "ipykernel" },
+    { name = "pandas" },
 ]
 
 [package.dev-dependencies]
@@ -265,6 +266,7 @@ dev = [
 requires-dist = [
     { name = "ibis-framework", extras = ["duckdb"], specifier = ">=10.6.0" },
     { name = "ipykernel", specifier = ">=6.29.5" },
+    { name = "pandas", specifier = ">=2.3.0" },
 ]
 
 [package.metadata.requires-dev]
