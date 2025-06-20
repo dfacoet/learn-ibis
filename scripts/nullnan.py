@@ -1,7 +1,6 @@
 import operator
 
 import ibis
-import pandas as pd
 import pyarrow
 
 VALUES = [1.0, 0.0, None, float("nan"), float("inf"), float("-inf")]
