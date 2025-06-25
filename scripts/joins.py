@@ -3,6 +3,9 @@ import ibis
 import pyarrow
 
 JOIN_KEYS = ["time", "size"]
+VALUES = ["value"]
+LEFT_COLS = JOIN_KEYS + ["A"] + VALUES
+RIGHT_COLS = JOIN_KEYS + ["B"] + VALUES
 
 time_index = [datetime(1989, 1, d) for d in range(1, 5)]
 
@@ -29,6 +32,11 @@ print("left:")
 print(left_table.to_pandas())
 print("right:")
 print(right_table.to_pandas())
+
+
+expected = {  # how -> expected columns
+    "inner",
+}
 
 con = ibis.duckdb.connect(":memory:")
 left = con.create_table("left_table", left_table)
