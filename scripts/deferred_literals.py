@@ -20,7 +20,6 @@ for lit in [1, 1.0, ibis.literal(1.0), ibis.deferred(1.0), ibis._(1.0)]:
 
 # Look into "Table is not callable" error
 
-
 expr = ibis._(1.0) + ibis._["value"]
 result = table.select(expr)
 print(result.to_pandas())
