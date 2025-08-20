@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Example demonstrating Ibis with PostgreSQL backend:
 - Create a table with string and JSONB columns
@@ -11,7 +10,7 @@ import json
 import ibis
 
 
-def create_jsonb_table(con=None, table_name="jsonb_example"):
+def create_jsonb_table(con=None, table_name: str = "jsonb_example") -> str:
     """
     Create and populate a table with string and JSONB columns.
 
@@ -33,20 +32,22 @@ def create_jsonb_table(con=None, table_name="jsonb_example"):
         pass  # Table doesn't exist
 
     # Create the table schema
-    schema = ibis.schema({"string_col": "string", "jsonb_col": "json"})
+    schema = ibis.schema(
+        {"string_col": "string", "jsonb_col": "json", "floatnan_col": "float"}
+    )
 
     # Create the table
     con.create_table(table_name, schema=schema)
 
     # Insert data using raw SQL to handle JSON properly
     insert_sql = f"""
-    INSERT INTO {table_name} (string_col, jsonb_col) VALUES
-    ('A', NULL),
-    ('B', '"null"'::jsonb),
-    ('C', '3.14'::jsonb),
-    ('A', '42'::jsonb),
-    ('B', '2.718'::jsonb),
-    ('C', '100'::jsonb)
+    INSERT INTO {table_name} (string_col, jsonb_col, floatnan_col) VALUES
+    ('A', NULL, 1.5),
+    ('B', 'null'::jsonb, 'NaN'::float),
+    ('C', '3.14'::jsonb, 2.7),
+    ('A', '42'::jsonb, 'NaN'::float),
+    ('B', '2.718'::jsonb, 3.9),
+    ('C', '100'::jsonb, 'NaN'::float)
     """
 
     con.raw_sql(insert_sql)
@@ -55,7 +56,7 @@ def create_jsonb_table(con=None, table_name="jsonb_example"):
 
 def main():
     # Connect to PostgreSQL database using connection string
-    con = ibis.postgres.connect("postgresql://username:password@localhost:5433/ibis")
+    con = ibis.connect("postgresql://username:password@localhost:5433/ibis")
 
     print("Connected to PostgreSQL database")
 
@@ -84,7 +85,10 @@ def main():
     for i in range(len(data["string_col"])):
         string_val = data["string_col"][i]
         jsonb_val = data["jsonb_col"][i]
-        print(f"  Row {i + 1}: string_col='{string_val}', jsonb_col={jsonb_val}")
+        floatnan_val = data["floatnan_col"][i]
+        print(
+            f"  Row {i + 1}: string_col='{string_val}', jsonb_col={jsonb_val}, floatnan_col={floatnan_val}"
+        )
 
     print("\nPyArrow table info:")
     print(f"  Number of rows: {arrow_table.num_rows}")
