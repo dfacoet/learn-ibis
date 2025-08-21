@@ -55,12 +55,6 @@ TEST_CASES = [
 ]
 
 
-@pytest.fixture(params=["duckdb", "postgres"])
-def backend(request):
-    """Parametrized backend fixture."""
-    return request.param
-
-
 @pytest.mark.parametrize("data", TEST_CASES)
 def test_write_read_table(backend, data):
     """Test writing and reading a table preserves data integrity."""
