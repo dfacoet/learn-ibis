@@ -283,13 +283,15 @@ dependencies = [
     { name = "psycopg2-binary" },
     { name = "pyarrow" },
     { name = "pydantic-settings" },
-    { name = "pytest" },
 ]
 
 [package.optional-dependencies]
 dev = [
     { name = "ruff" },
     { name = "ty" },
+]
+test = [
+    { name = "pytest" },
 ]
 
 [package.metadata]
@@ -300,11 +302,11 @@ requires-dist = [
     { name = "psycopg2-binary", specifier = ">=2.9.10" },
     { name = "pyarrow", specifier = ">=20.0.0" },
     { name = "pydantic-settings", specifier = ">=2.0.0" },
-    { name = "pytest", specifier = ">=8.4.1" },
+    { name = "pytest", marker = "extra == 'test'", specifier = ">=8.4.1" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.12.0" },
     { name = "ty", marker = "extra == 'dev'", specifier = ">=0.0.1a11" },
 ]
-provides-extras = ["dev"]
+provides-extras = ["dev", "test"]
 
 [[package]]
 name = "markdown-it-py"

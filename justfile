@@ -36,6 +36,3 @@ db-connect:
     source .env
     set +a
     docker exec -it learn-ibis-db psql -U $DB_USER -d $DB_NAME
-
-
-
